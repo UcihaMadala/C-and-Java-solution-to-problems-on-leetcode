@@ -1,0 +1,90 @@
+struct ListNode{
+   int val;
+   struct *next;
+};//定义结构体
+
+struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2) {
+    int n=0;
+    struct ListNode *p1,*p2,*head;
+    int k=0;
+    p1=p2=(struct ListNode *)malloc(sizeof(struct ListNode));
+
+    if((l1->val)+(l2->val)>=10){
+       p1->val=(l1->val)+(l2->val)-10;
+       k=1;
+    }
+    else
+       p1->val=(l1->val)+(l2->val);
+    head=p1;
+    while((l1->next!=NULL)&&(l2->next!=NULL))
+    {
+        n++;
+        if(n==1)
+            head=p1;
+        else
+            p2->next=p1;
+        p2=p1;
+        p1=(struct ListNode *)malloc(sizeof(struct ListNode));
+        l1=l1->next,l2=l2->next;
+        if((l1->val)+(l2->val)+k>=10){
+           p1->val=(l1->val)+(l2->val)+k-10;
+           k=1;
+        }
+        else{
+           p1->val=(l1->val)+(l2->val)+k;
+           k=0;
+        }
+    };
+    
+    while(l1->next==NULL&&l2->next!=NULL){
+        n++;
+        if(n==1)
+            head=p1;
+        else
+            p2->next=p1;
+        p2=p1;
+        p1=(struct ListNode *)malloc(sizeof(struct ListNode));
+        l2=l2->next;
+        if((l2->val)+k>=10){
+           p1->val=(l2->val)+k-10;
+           k=1;
+        }
+        else{
+           p1->val=(l2->val)+k;
+           k=0;
+        }
+    }
+    
+    while(l1->next!=NULL&&l2->next==NULL){
+        n++;
+        if(n==1)
+            head=p1;
+        else
+            p2->next=p1;
+        p2=p1;
+        p1=(struct ListNode *)malloc(sizeof(struct ListNode));
+        l1=l1->next;
+        if((l1->val)+k>=10){
+           p1->val=(l1->val)+k-10;
+           k=1;
+        }
+        else{
+           p1->val=(l1->val)+k;
+           k=0;
+        }
+    }
+        
+    if(k==1){
+        p2->next=p1;
+        p2=p1;
+        p1=(struct ListNode *)malloc(sizeof(struct ListNode));
+        p1->val=1;
+        p2->next=p1;
+        p1->next=NULL;
+    }
+    else{
+    p2->next=p1;
+    p1->next=NULL;
+    }
+    return (head);
+}
